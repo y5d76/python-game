@@ -27,8 +27,27 @@ class GuessingGame:
             root, text="Reset Game", bg="#2196F3", fg="white", command=self.reset_game)
         self.reset_button.pack(pady=5)
 
+        self.dark_mode = False
+        self.theme_button = tk.Button(
+            root, text="Toggle Theme", bg="#9C27B0", fg="white", command=self.toggle_theme)
+        self.theme_button.pack(pady=5)
+
         self.score_label = tk.Label(root, text="Best Score: None")
         self.score_label.pack(pady=5)
+
+    def toggle_theme(self):
+        if self.dark_mode:
+            self.root.configure(bg="#f0f0f0")
+            self.label.config(bg="#f0f0f0", fg="black")
+            self.result_label.config(bg="#f0f0f0", fg="black")
+            self.score_label.config(bg="#f0f0f0", fg="black")
+            self.dark_mode = False
+        else:
+            self.root.configure(bg="#333")
+            self.label.config(bg="#333", fg="white")
+            self.result_label.config(bg="#333", fg="white")
+            self.score_label.config(bg="#333", fg="white")
+            self.dark_mode = True
 
     def check_guess(self):
         try:
