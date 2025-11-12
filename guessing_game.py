@@ -1,26 +1,62 @@
+import tkinter as tk
 import random
 
 
-def play_game():
-    print("Welcome to the Number Guessing Game!")
-    secret = random.randint(1, 20)
-    attempts = 0
+class GuessingGame:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Number Guessing Game")
+        self.secret_number = random.randint(1, 20)
+        self.guess_count = 0
+        self.best_score = None
 
-    while True:
+        self.label = tk.Label(root, text="Guess a number between 1 and 20:")
+        self.label.pack(pady=10)
+
+        self.entry = tk.Entry(root)
+        self.entry.pack(pady=5)
+
+        self.result_label = tk.Label(root, text="")
+        self.result_label.pack(pady=10)
+
+        self.button = tk.Button(
+            root, text="Submit Guess", bg="#4CAF50", fg="white", command=self.check_guess)
+        self.button.pack(pady=5)
+
+        self.reset_button = tk.Button(
+            root, text="Reset Game", bg="#2196F3", fg="white", command=self.reset_game)
+        self.reset_button.pack(pady=5)
+
+        self.score_label = tk.Label(root, text="Best Score: None")
+        self.score_label.pack(pady=5)
+
+    def check_guess(self):
         try:
-            guess = int(input("Guess a number between 1 and 20: "))
-            attempts += 1
+            guess = int(self.entry.get())
+            self.guess_count += 1
 
-            if guess < secret:
-                print("Too low! Try again.")
-            elif guess > secret:
-                print("Too high! Try again.")
+            if guess < self.secret_number:
+                self.result_label.config(text="Too low! Try again.")
+            elif guess > self.secret_number:
+                self.result_label.config(text="Too high! Try again.")
             else:
-                print(f"Correct! You guessed it in {attempts} tries.")
-                break
+                self.result_label.config(
+                    text=f"Correct! You guessed in {self.guess_count} tries.")
+                if self.best_score is None or self.guess_count < self.best_score:
+                    self.best_score = self.guess_count
+                    self.score_label.config(
+                        text=f"Best Score: {self.best_score}")
         except ValueError:
-            print("Please enter a valid number.")
+            self.result_label.config(text="Please enter a valid number.")
+
+    def reset_game(self):
+        self.secret_number = random.randint(1, 20)
+        self.guess_count = 0
+        self.result_label.config(text="")
+        self.entry.delete(0, tk.END)
 
 
 if __name__ == "__main__":
-    play_game()
+    root = tk.Tk()
+    game = GuessingGame(root)
+    root.mainloop()
