@@ -9,6 +9,12 @@ class GuessingGame:
         self.secret_number = random.randint(1, 20)
         self.guess_count = 0
         self.best_score = None
+        self.games_played = 0
+        self.total_guesses = 0
+
+        self.stats_label = tk.Label(
+            root, text="Games Played: 0 | Avg Guesses: 0")
+        self.stats_label.pack(pady=5)
 
         self.label = tk.Label(root, text="Guess a number between 1 and 20:")
         self.label.pack(pady=10)
@@ -65,6 +71,13 @@ class GuessingGame:
                     self.best_score = self.guess_count
                     self.score_label.config(
                         text=f"Best Score: {self.best_score}")
+
+                self.games_played += 1
+                self.total_guesses += self.guess_count
+                avg = self.total_guesses / self.games_played
+                self.stats_label.config(
+                    text=f"Games Played: {self.games_played} | Avg Guesses: {avg:.1f}")
+
         except ValueError:
             self.result_label.config(text="Please enter a valid number.")
 
