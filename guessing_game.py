@@ -1,3 +1,8 @@
+# Student No: 23049805
+# I acknowledge the use of Microsoft Copilot (version GPT-4, Microsoft, https://copilot.microsoft.com/)
+# to generate this code.
+
+
 import tkinter as tk
 import random
 
@@ -42,6 +47,7 @@ class GuessingGame:
         self.score_label.pack(pady=5)
 
     def toggle_theme(self):
+        """ Toggle between light and dark mode."""
         if self.dark_mode:
             self.root.configure(bg="#f0f0f0")
             self.label.config(bg="#f0f0f0", fg="black")
